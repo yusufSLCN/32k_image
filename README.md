@@ -1,4 +1,4 @@
 # 32k_image
 32k image generator
 
-This script uses mandelbrot set to generate desired resolution images.
+32k_image.py script uses mandelbrot set to generate a 32k image. The resolution can be changed using width and height of the canvas.
