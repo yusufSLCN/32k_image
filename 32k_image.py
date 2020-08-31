@@ -34,7 +34,7 @@ def mandelbrot(canvas, x_win, y_win):
                 
             if zAbs > 30:
                 #sand waves
-                particleWave = math.sin(zAbs/32 + np.random.randn()/3)
+                particleWave = math.sin(zAbs/32)
                 canvas[y,x,0] = 0.86 + particleWave/8
                 canvas[y,x,1] = 0.82 + particleWave/10
                 canvas[y,x,2] = 0.70 + particleWave/8
@@ -63,8 +63,9 @@ if __name__ == "__main__":
     mandelbrot(canvas, x_win, y_win)
     print('Time elapsed:', time.time()-t)
     canvas = np.transpose(canvas,(1,0,2))
-    print('save')
+    
     matplotlib.pyplot.imsave('.//canvas.jpg', canvas)
+    print('saved')
     # matplotlib.pyplot.imshow(canvas)
 
 
