@@ -1,12 +1,18 @@
 import numpy as np
 import math
-import matplotlib
+import matplotlib.pyplot
 from noise import snoise3
 import time
 
 def mandelbrot(canvas, x_win, y_win):
     print('run')
-    # canvas = np.zeros((height, width))
+    #scale for perlin time
+    scale = 5
+    #seed for perlin noise
+    seed = [0.49233038 , 0.5709, 0.651]
+    #max iteration for mandelbrot convergence
+    maxIter = 20
+    
     x_scale = np.linspace(x_win[0], x_win[1], width, dtype='float32')
     y_scale = np.linspace(y_win[0], y_win[1], height, dtype='float32')
     
@@ -27,11 +33,13 @@ def mandelbrot(canvas, x_win, y_win):
                     break
                 
             if zAbs > 30:
+                #sand waves
                 particleWave = math.sin(zAbs/32 + np.random.randn()/3)
                 canvas[y,x,0] = 0.86 + particleWave/8
                 canvas[y,x,1] = 0.82 + particleWave/10
                 canvas[y,x,2] = 0.70 + particleWave/8
             else:
+                #water
                 canvas[y,x, 1] = (snoise3(x_time[x], y_time[y], seed[1], 5) + 1)/2.5
                 canvas[y,x, 2] = (snoise3(x_time[x], y_time[y], seed[2], 5) + 1)/2
                 
@@ -45,12 +53,6 @@ if __name__ == "__main__":
     width = 320*100
     canvas = np.zeros((height, width,3), dtype = np.float32)
     
-    #scale for perlin time
-    scale = 5
-    #seed for perlin noise
-    seed = [0.49233038 , 0.5709, 0.651]
-    maxIter = 20
-    
     #full mandelbrot set
     # [minX, maxX],[minY, maxY]= [1-(2*width/height), 1], [-1, 1] 
     [minX, maxX],[minY, maxY]= [-2.1855746760144465+0.1, -0.8258975993201616+0.1] ,[0.3975462077756533, -0.39727214786488205]
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     print('Time elapsed:', time.time()-t)
     canvas = np.transpose(canvas,(1,0,2))
     print('save')
-    matplotlib.image.imsave('.//canvas.jpg', canvas)
+    matplotlib.pyplot.imsave('.//canvas.jpg', canvas)
     # matplotlib.pyplot.imshow(canvas)
 
 
