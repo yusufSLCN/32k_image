@@ -7,7 +7,7 @@ import time
 def mandelbrot(canvas, x_win, y_win):
     print('run')
     #scale for perlin time
-    scale = 5
+    scale = 9
     #seed for perlin noise
     seed = [0.49233038 , 0.5709, 0.651]
     #max iteration for mandelbrot convergence
@@ -20,7 +20,7 @@ def mandelbrot(canvas, x_win, y_win):
     y_time = x_scale * scale
     # y_signal = scaleInput(y_scale,y_win[0],y_win[1],-height/2,height/2)
     for y, row in enumerate(canvas[:,:,0]):
-        if not y % 50:
+        if not y %50:
             print(f'{y}/{height}')
         for x, _ in enumerate(row):
             z = complex(0,0)
@@ -29,14 +29,14 @@ def mandelbrot(canvas, x_win, y_win):
             for _ in range(maxIter):
                 z = poly(z,c)
                 zAbs = abs(z)
-                if zAbs > 30:
+                if zAbs > 50:
                     break
                 
             if zAbs > 30:
                 #sand waves
                 particleWave = math.sin(zAbs/32)
-                canvas[y,x,0] = 0.86 + particleWave/8
-                canvas[y,x,1] = 0.82 + particleWave/10
+                canvas[y,x,0] = 0.92 + particleWave/8
+                canvas[y,x,1] = 0.82 + particleWave/88
                 canvas[y,x,2] = 0.70 + particleWave/8
             else:
                 #water
@@ -50,7 +50,7 @@ def poly(z, c):
     
 if __name__ == "__main__":
     height = 180*100
-    width = 320*100
+    width = 190*100
     canvas = np.zeros((height, width,3), dtype = np.float32)
     
     #full mandelbrot set
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     t = time.time()
     mandelbrot(canvas, x_win, y_win)
     print('Time elapsed:', time.time()-t)
-    canvas = np.transpose(canvas,(1,0,2))
+    canvas = np.transpose(canvas,(1,0,9))
     
     matplotlib.pyplot.imsave('.//canvas.jpg', canvas)
     print('saved')
